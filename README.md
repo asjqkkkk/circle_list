@@ -6,7 +6,7 @@ A new Flutter package for Circle List.
 
 ```
 dependencies:
-  dio: 0.0.1
+  dio: 0.0.3
 ```
 
 ## Super simple to use
