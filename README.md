@@ -6,7 +6,7 @@ A new Flutter package for Circle List.
 
 ```
 dependencies:
-  circle_list: 0.0.3
+  circle_list: ^0.0.3
 ```
 
 ## Super simple to use
@@ -21,13 +21,15 @@ class ShowDemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Colors.white,),
       body: Center(
         child: CircleList(
-          childrenPadding: 30,
           origin: Offset(0, 0),
-          children: List.generate(10, (index){
-            return Icon(Icons.details,color: index % 2 ==0 ?Colors.blue:Colors.orange,);
+          children: List.generate(10, (index) {
+            return Icon(
+              Icons.details,
+              color: index % 2 == 0 ? Colors.blue : Colors.orange,
+            );
           }),
         ),
       ),
@@ -36,4 +38,47 @@ class ShowDemoPage extends StatelessWidget {
 }
 ```
 
-![image](https://test-1256696029.cos.ap-chengdu.myqcloud.com/demo.gif)
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/001.gif)
+
+
+### If you want to add gradient background
+
+
+```
+CircleList(
+          gradient: LinearGradient(
+            colors: [Colors.redAccent, Colors.blueAccent],
+          ),
+          innerCircleColor: Colors.white,
+          origin: Offset(0, 0),
+          children: List.generate(10, (index) {
+            return Icon(
+              Icons.details,
+              color: index % 2 == 0 ? Colors.blue : Colors.orange,
+            );
+          }),
+        ),
+```
+
+
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/002.png)
+
+### another background
+
+
+```
+CircleList(
+          innerCircleColor: Colors.redAccent,
+          outerCircleColor: Colors.greenAccent,
+          origin: Offset(0, 0),
+          children: List.generate(10, (index) {
+            return Icon(
+              Icons.details,
+              color: index % 2 == 0 ? Colors.blue : Colors.orange,
+            );
+          }),
+        )
+```
+
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/003.png)
+
