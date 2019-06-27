@@ -9,8 +9,6 @@ class ShowDemoPage extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.white,),
       body: Center(
         child: CircleList(
-          innerCircleColor: Colors.redAccent,
-          outerCircleColor: Colors.greenAccent,
           origin: Offset(0, 0),
           children: List.generate(10, (index) {
             return Icon(
@@ -18,6 +16,9 @@ class ShowDemoPage extends StatelessWidget {
               color: index % 2 == 0 ? Colors.blue : Colors.orange,
             );
           }),
+          centerWidget: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(100)),
+              child: Image.asset("images/avator.jpg")),
         ),
       ),
     );

@@ -27,7 +27,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   #环形列表
-  circle_list: ^0.0.3
+  circle_list: ^0.0.4
 
 
 
@@ -37,6 +37,8 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  assets:
+    - images/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
