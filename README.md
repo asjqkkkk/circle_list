@@ -6,7 +6,7 @@ A new Flutter package for Circle List.
 
 ```
 dependencies:
-  circle_list: ^0.0.3
+  circle_list: ^0.0.4
 ```
 
 ## Super simple to use
@@ -49,7 +49,6 @@ CircleList(
           gradient: LinearGradient(
             colors: [Colors.redAccent, Colors.blueAccent],
           ),
-          innerCircleColor: Colors.white,
           origin: Offset(0, 0),
           children: List.generate(10, (index) {
             return Icon(
@@ -63,7 +62,7 @@ CircleList(
 
 ![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/002.png)
 
-### another background
+### Another background
 
 
 ```
@@ -81,4 +80,25 @@ CircleList(
 ```
 
 ![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/003.png)
+
+### CenterWidget
+
+
+
+```
+CircleList(
+          origin: Offset(0, 0),
+          children: List.generate(10, (index) {
+            return Icon(
+              Icons.details,
+              color: index % 2 == 0 ? Colors.blue : Colors.orange,
+            );
+          }),
+          centerWidget: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(100)),
+              child: Image.asset("images/avator.jpg")),
+        ),
+```
+
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/004.png)
 
