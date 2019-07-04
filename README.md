@@ -6,7 +6,7 @@ A new Flutter package for Circle List.
 
 ```
 dependencies:
-  circle_list: ^0.0.9
+  circle_list: ^0.1.0
 ```
 
 ## Super simple to use
@@ -106,6 +106,13 @@ CircleList(
 ## Demo
 
 ![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/005.gif)
+
+
+
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/circle.gif)
+
+
+
 
 
 ## Params

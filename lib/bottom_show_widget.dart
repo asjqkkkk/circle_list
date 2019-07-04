@@ -1,4 +1,5 @@
 import 'package:circle_list/circle_list.dart';
+import 'package:circle_list_demo/pages/demo_page_two.dart';
 import 'package:flutter/material.dart';
 
 class BottomShowWidget extends StatefulWidget {
@@ -67,8 +68,10 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
                   showInitialAnimation: true,
                   children: List.generate(10, (index) {
                     return GestureDetector(
-                      onTap: () {
-                        debugPrint("$index");
+                      onTap: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (ctx){
+                          return ShowDemoPageTwo();
+                        }));
                       },
                       child: Icon(
                         Icons.drive_eta,

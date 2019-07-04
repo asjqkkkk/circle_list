@@ -26,8 +26,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #环形列表
-  circle_list: ^0.0.9
+  #circle_list
+  circle_list: ^0.1.0
+  flare_flutter: ^1.5.2
 
 
 
