@@ -2,7 +2,6 @@
 
 A new Flutter package for Circle List.
 
-[![Build Status - Travis][0]][1]
 
 ## Add dependency
 
