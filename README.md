@@ -2,7 +2,7 @@
 
 A new Flutter package for Circle List.
 
-https://img.shields.io/travis/asjqkkkk/circle_list.svg
+[![Build Status](https://www.travis-ci.org/asjqkkkk/circle_list.svg?branch=master)](https://www.travis-ci.org/asjqkkkk/circle_list)
 
 ## Add dependency
 
