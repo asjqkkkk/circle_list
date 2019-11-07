@@ -118,21 +118,23 @@ CircleList(
 
 ## Params
 
--  double innerRadius;
--  double outerRadius;
--  double childrenPadding: 
--  double initialAngle;
--  Color outerCircleColor;
--  Color innerCircleColor;
--  Gradient gradient;
--  Offset origin;
--  List<Widget> children;
--  bool isChildrenVertical;
--  bool outerCircleRotateWithChildren;
--  bool innerCircleRotateWithChildren;
--  bool showInitialAnimation;
--  Widget centerWidget;
--  RadialDragStart onDragStart;
--  RadialDragUpdate onDragUpdate;
--  RadialDragEnd onDragEnd;
--  AnimationSetting animationSetting;
+```
+  double innerRadius;
+  double outerRadius;
+  double childrenPadding;
+  double initialAngle;
+  Color outerCircleColor;
+  Color innerCircleColor;
+  Gradient gradient;
+  Offset origin;
+  List<Widget> children;
+  bool isChildrenVertical;
+  RotateMode rotateMode;
+  bool innerCircleRotateWithChildren;
+  bool showInitialAnimation;
+  Widget centerWidget;
+  RadialDragStart onDragStart;
+  RadialDragUpdate onDragUpdate;
+  RadialDragEnd onDragEnd;
+  AnimationSetting animationSetting;
+```
