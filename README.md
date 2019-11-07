@@ -7,7 +7,7 @@ A new Flutter package for Circle List.
 
 ```
 dependencies:
-  circle_list: ^0.1.3
+  circle_list: ^1.0.1
 ```
 
 ## Super simple to use
