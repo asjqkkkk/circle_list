@@ -27,7 +27,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   #circle_list
-  circle_list: ^1.0.1
+  circle_list:
+    path: ../
   flare_flutter: ^1.5.2
 
 

@@ -1,6 +1,5 @@
 import 'package:circle_list_demo/bottom_show_widget.dart';
 import 'package:circle_list_demo/full_screen_dialog_util.dart';
-import 'package:circle_list_demo/pages/demo_page_two.dart';
 import 'package:flutter/material.dart';
 
 class ShowDemoPage extends StatelessWidget {

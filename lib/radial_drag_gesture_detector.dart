@@ -14,12 +14,13 @@ class RadialDragGestureDetector extends StatefulWidget {
   final RadialDragUpdate onRadialDragUpdate;
   final RadialDragEnd onRadialDragEnd;
   final Widget child;
+  final bool stopRotate;
 
   RadialDragGestureDetector({
     this.onRadialDragStart,
     this.onRadialDragUpdate,
     this.onRadialDragEnd,
-    this.child,
+    this.child, this.stopRotate = false,
   });
 
   @override
@@ -63,7 +64,7 @@ class _RadialDragGestureDetectorState extends State<RadialDragGestureDetector> {
 
   @override
   Widget build(BuildContext context) {
-    return new GestureDetector(
+    return widget.stopRotate ? widget.child : GestureDetector(
       onPanStart: _onPanStart,
       onPanUpdate: _onPanUpdate,
       onPanEnd: _onPanEnd,

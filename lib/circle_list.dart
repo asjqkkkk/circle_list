@@ -100,32 +100,11 @@ class _CircleListState extends State<CircleList>
 
     ///the origin is the point to left and top
     final Offset origin = widget.origin ?? Offset(0, -outerRadius);
+    double backgroundCircleAngle = 0.0;
+    if(rotateMode == RotateMode.allRotate){
+      backgroundCircleAngle = dragModel.angleDiff + widget.initialAngle;
+    }
 
-    final detector = RadialDragGestureDetector(
-      onRadialDragUpdate: (PolarCoord updateCoord) {
-        if (widget.onDragUpdate != null) {
-          widget.onDragUpdate(updateCoord);
-        }
-        setState(() {
-          dragModel.getAngleDiff(updateCoord);
-        });
-      },
-      onRadialDragStart: (PolarCoord startCoord) {
-        if (widget.onDragStart != null) {
-          widget.onDragStart(startCoord);
-        }
-        setState(() {
-          dragModel.start = startCoord;
-        });
-      },
-      onRadialDragEnd: () {
-        if (widget.onDragEnd != null) {
-          widget.onDragEnd();
-        }
-        dragModel.end = dragModel.start;
-        dragModel.end.angle = dragModel.angleDiff;
-      },
-    );
 
     return Container(
       width: outerRadius * 2,
@@ -136,6 +115,7 @@ class _CircleListState extends State<CircleList>
             left: origin.dx,
             top: -origin.dy,
             child: RadialDragGestureDetector(
+              stopRotate: rotateMode == RotateMode.stopRotate,
               onRadialDragUpdate: (PolarCoord updateCoord) {
                 if (widget.onDragUpdate != null) {
                   widget.onDragUpdate(updateCoord);
@@ -160,9 +140,7 @@ class _CircleListState extends State<CircleList>
                 dragModel.end.angle = dragModel.angleDiff;
               },
               child: Transform.rotate(
-                angle: rotateMode == RotateMode.allRotate
-                    ? (dragModel.angleDiff + widget.initialAngle)
-                    : 0,
+                angle: backgroundCircleAngle,
                 child: Container(
                     width: outerRadius * 2,
                     height: outerRadius * 2,
@@ -183,6 +161,7 @@ class _CircleListState extends State<CircleList>
               width: outerRadius * 2,
               height: outerRadius * 2,
               child: RadialDragGestureDetector(
+                stopRotate: rotateMode == RotateMode.stopRotate,
                 onRadialDragUpdate: (PolarCoord updateCoord) {
                   if (widget.onDragUpdate != null) {
                     widget.onDragUpdate(updateCoord);
@@ -299,4 +278,5 @@ class AnimationSetting {
 enum RotateMode{
   onlyChildrenRotate,
   allRotate,
+  stopRotate,
 }
