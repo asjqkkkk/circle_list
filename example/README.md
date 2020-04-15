@@ -2,6 +2,7 @@
 
 A new Flutter package for Circle List.
 
+[![Build Status](https://www.travis-ci.org/asjqkkkk/circle_list.svg?branch=master)](https://www.travis-ci.org/asjqkkkk/circle_list)        [![pub version](https://img.shields.io/pub/v/circle_list.svg)](https://pub.flutter-io.cn/packages/circle_list)
 ## Add dependency
 
 ```
@@ -105,13 +106,17 @@ CircleList(
 
 ## Demo
 
+![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/005.gif)
+
+
+
 ![image](https://blog-pic-1256696029.cos.ap-guangzhou.myqcloud.com/circl_list/circle.gif)
 
-[The Demo Link](https://github.com/asjqkkkk/circle_list)
+
+
 
 
 ## Params
-
 
 ```
   double innerRadius;

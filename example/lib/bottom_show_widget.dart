@@ -1,6 +1,7 @@
-import 'package:circle_list/circle_list.dart';
 import 'package:circle_list_demo/pages/demo_page_two.dart';
 import 'package:flutter/material.dart';
+
+import 'circle/circle_list.dart';
 
 class BottomShowWidget extends StatefulWidget {
   @override
@@ -65,6 +66,7 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
               AnimatedBuilder(
                 animation: _animationBottomShow,
                 child: CircleList(
+                  rotateMode: RotateMode.allRotate,
                   showInitialAnimation: true,
                   children: List.generate(10, (index) {
                     return GestureDetector(
@@ -81,7 +83,7 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
                     );
                   }),
                   innerCircleColor: Colors.black54,
-                  outerCircleColor: Colors.white,
+                  gradient: LinearGradient(colors: [Colors.blue,Colors.red],),
                   centerWidget: GestureDetector(
                       onTap: () {
                         doExit(context, _controller);
