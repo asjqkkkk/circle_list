@@ -1,6 +1,6 @@
 name: circle_list
 description: This is a flutter circle list plugin written entirely using dart,you can use it in ios、android or web!
-version: 1.0.3
+version: 1.0.4
 verified publisher:
   - agedchen@gmail.com
 homepage: https://github.com/asjqkkkk/circle_list

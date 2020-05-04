@@ -20,11 +20,13 @@ class RadialDragGestureDetector extends StatefulWidget {
     this.onRadialDragStart,
     this.onRadialDragUpdate,
     this.onRadialDragEnd,
-    this.child, this.stopRotate = false,
+    this.child,
+    this.stopRotate = false,
   });
 
   @override
-  _RadialDragGestureDetectorState createState() => new _RadialDragGestureDetectorState();
+  _RadialDragGestureDetectorState createState() =>
+      new _RadialDragGestureDetectorState();
 }
 
 class _RadialDragGestureDetectorState extends State<RadialDragGestureDetector> {
@@ -51,25 +53,29 @@ class _RadialDragGestureDetectorState extends State<RadialDragGestureDetector> {
   _polarCoordFromGlobalOffset(globalOffset) {
     // Convert the user's global touch offset to an offset that is local to
     // this Widget.
-    final localTouchOffset = (context.findRenderObject() as RenderBox).globalToLocal(globalOffset);
+    final localTouchOffset =
+        (context.findRenderObject() as RenderBox).globalToLocal(globalOffset);
 
     // Convert the local offset to a Point so that we can do math with it.
     final localTouchPoint = new Point(localTouchOffset.dx, localTouchOffset.dy);
 
     // Create a Point at the center of this Widget to act as the origin.
-    final originPoint = new Point(context.size.width / 2, context.size.height / 2);
+    final originPoint =
+        new Point(context.size.width / 2, context.size.height / 2);
 
     return new PolarCoord.fromPoints(originPoint, localTouchPoint);
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.stopRotate ? widget.child : GestureDetector(
-      onPanStart: _onPanStart,
-      onPanUpdate: _onPanUpdate,
-      onPanEnd: _onPanEnd,
-      child: widget.child,
-    );
+    return widget.stopRotate
+        ? widget.child
+        : GestureDetector(
+            onPanStart: _onPanStart,
+            onPanUpdate: _onPanUpdate,
+            onPanEnd: _onPanEnd,
+            child: widget.child,
+          );
   }
 }
 
@@ -95,7 +101,7 @@ class PolarCoord {
     );
   }
 
-  PolarCoord(this.angle, this.radius,this.origin,this.point);
+  PolarCoord(this.angle, this.radius, this.origin, this.point);
 
   @override
   toString() {
@@ -108,3 +114,14 @@ typedef RadialDragStart = Function(PolarCoord startCoord);
 typedef RadialDragUpdate = Function(PolarCoord updateCoord);
 typedef RadialDragEnd = Function();
 
+enum RotateMode {
+  onlyChildrenRotate,
+  allRotate,
+  stopRotate,
+}
+
+class DragAngleRange {
+  double start, end;
+
+  DragAngleRange(this.start, this.end);
+}

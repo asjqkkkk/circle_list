@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:circle_list_demo/pages/demo_page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:circle_list/circle_list.dart';
@@ -65,8 +67,8 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
               AnimatedBuilder(
                 animation: _animationBottomShow,
                 child: CircleList(
-                  rotateMode: RotateMode.stopRotate,
                   showInitialAnimation: false,
+                  dragAngleRange: DragAngleRange(0.0, pi),
                   children: List.generate(10, (index) {
                     return GestureDetector(
                       onTap: (){

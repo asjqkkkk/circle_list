@@ -1,5 +1,6 @@
+#### [1.0.4] - add `DragAngleRange` to fix issue [#6](https://github.com/asjqkkkk/circle_list/issues/6)
 
-#### [1.0.3] - add stopRotate Mode to fix issue [#5](https://github.com/asjqkkkk/circle_list/issues/5#event-3234255569)
+#### [1.0.3] - add stopRotate Mode to fix issue [#5](https://github.com/asjqkkkk/circle_list/issues/5)
 
 #### [1.0.2] - standard plug-in related parameters
 
