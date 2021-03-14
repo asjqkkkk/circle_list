@@ -11,18 +11,17 @@ class BottomShowWidget extends StatefulWidget {
 
 class _BottomShowWidgetState extends State<BottomShowWidget>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animationBottomShow;
+  late AnimationController _controller;
+  late Animation<double> _animationBottomShow;
 
   @override
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _animationBottomShow = new Tween(begin: 0.0, end: 1.0).animate(
+    _animationBottomShow = Tween(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn));
     _controller.forward();
     super.initState();
-
   }
 
   @override
@@ -56,12 +55,15 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.2),
-                        shape: BoxShape.circle
-                      ),
+                          color: Colors.grey.withOpacity(0.2),
+                          shape: BoxShape.circle),
                     ),
                     builder: (ctx, child) {
-                      return Transform.scale(scale: (size.height / 28) * (_animationBottomShow.value),child: child,);
+                      return Transform.scale(
+                        scale:
+                            (size.height / 28) * (_animationBottomShow.value),
+                        child: child,
+                      );
                     }),
               ),
               AnimatedBuilder(
@@ -71,8 +73,9 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
                   dragAngleRange: DragAngleRange(0.0, pi),
                   children: List.generate(10, (index) {
                     return GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (ctx){
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (ctx) {
                           return ShowDemoPageTwo();
                         }));
                       },
@@ -84,7 +87,9 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
                     );
                   }),
                   innerCircleColor: Colors.black54,
-                  gradient: LinearGradient(colors: [Colors.blue,Colors.red],),
+                  gradient: LinearGradient(
+                    colors: [Colors.blue, Colors.red],
+                  ),
                   centerWidget: GestureDetector(
                       onTap: () {
                         doExit(context, _controller);
@@ -125,7 +130,6 @@ class _BottomShowWidgetState extends State<BottomShowWidget>
   }
 
   void doExit(BuildContext context, AnimationController controller) {
-
     controller.reverse().then((r) {
       Navigator.of(context).pop();
     });
