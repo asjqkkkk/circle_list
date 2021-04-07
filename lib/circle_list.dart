@@ -7,25 +7,25 @@ export 'package:circle_list/radial_drag_gesture_detector.dart';
 import 'package:flutter/material.dart';
 
 class CircleList extends StatefulWidget {
-  final double innerRadius;
-  final double outerRadius;
+  final double? innerRadius;
+  final double? outerRadius;
   final double childrenPadding;
   final double initialAngle;
-  final Color outerCircleColor;
-  final Color innerCircleColor;
-  final Gradient gradient;
-  final Offset origin;
+  final Color? outerCircleColor;
+  final Color? innerCircleColor;
+  final Gradient? gradient;
+  final Offset? origin;
   final List<Widget> children;
   final bool isChildrenVertical;
-  final RotateMode rotateMode;
+  final RotateMode? rotateMode;
   final bool innerCircleRotateWithChildren;
   final bool showInitialAnimation;
-  final Widget centerWidget;
-  final RadialDragStart onDragStart;
-  final RadialDragUpdate onDragUpdate;
-  final RadialDragEnd onDragEnd;
-  final AnimationSetting animationSetting;
-  final DragAngleRange dragAngleRange;
+  final Widget? centerWidget;
+  final RadialDragStart? onDragStart;
+  final RadialDragUpdate? onDragUpdate;
+  final RadialDragEnd? onDragEnd;
+  final AnimationSetting? animationSetting;
+  final DragAngleRange? dragAngleRange;
 
   CircleList({
     this.innerRadius,
@@ -35,7 +35,7 @@ class CircleList extends StatefulWidget {
     this.outerCircleColor,
     this.innerCircleColor,
     this.origin,
-    @required this.children,
+    required this.children,
     this.onDragStart,
     this.onDragUpdate,
     this.onDragEnd,
@@ -47,7 +47,7 @@ class CircleList extends StatefulWidget {
     this.animationSetting,
     this.rotateMode,
     this.dragAngleRange,
-  }) : assert(children != null);
+  });
 
   @override
   _CircleListState createState() => _CircleListState();
@@ -56,8 +56,8 @@ class CircleList extends StatefulWidget {
 class _CircleListState extends State<CircleList>
     with SingleTickerProviderStateMixin {
   _DragModel dragModel = _DragModel();
-  AnimationController _controller;
-  Animation<double> _animationRotate;
+  AnimationController? _controller;
+  late Animation<double> _animationRotate;
   bool isAnimationStop = true;
 
   @override
@@ -65,23 +65,23 @@ class _CircleListState extends State<CircleList>
     if (widget.showInitialAnimation) {
       _controller = AnimationController(
           vsync: this,
-          duration: widget?.animationSetting?.duration ?? Duration(seconds: 1));
+          duration: widget.animationSetting?.duration ?? Duration(seconds: 1));
       _animationRotate = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-          parent: _controller,
-          curve: widget?.animationSetting?.curve ?? Curves.easeOutBack));
-      _controller.addStatusListener((status) {
+          parent: _controller!,
+          curve: widget.animationSetting?.curve ?? Curves.easeOutBack));
+      _controller!.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           setState(() {
             isAnimationStop = true;
           });
         }
       });
-      _controller.addListener(() {
+      _controller!.addListener(() {
         setState(() {
           isAnimationStop = false;
         });
       });
-      _controller.forward();
+      _controller!.forward();
     }
     super.initState();
   }
@@ -121,7 +121,7 @@ class _CircleListState extends State<CircleList>
               stopRotate: rotateMode == RotateMode.stopRotate,
               onRadialDragUpdate: (PolarCoord updateCoord) {
                 if (widget.onDragUpdate != null) {
-                  widget.onDragUpdate(updateCoord);
+                  widget.onDragUpdate!(updateCoord);
                 }
                 setState(() {
                   dragModel.getAngleDiff(updateCoord, dragAngleRange);
@@ -129,7 +129,7 @@ class _CircleListState extends State<CircleList>
               },
               onRadialDragStart: (PolarCoord startCoord) {
                 if (widget.onDragStart != null) {
-                  widget.onDragStart(startCoord);
+                  widget.onDragStart!(startCoord);
                 }
                 setState(() {
                   dragModel.start = startCoord;
@@ -137,10 +137,10 @@ class _CircleListState extends State<CircleList>
               },
               onRadialDragEnd: () {
                 if (widget.onDragEnd != null) {
-                  widget.onDragEnd();
+                  widget.onDragEnd!();
                 }
                 dragModel.end = dragModel.start;
-                dragModel.end.angle = dragModel.angleDiff;
+                dragModel.end!.angle = dragModel.angleDiff;
               },
               child: Transform.rotate(
                 angle: backgroundCircleAngle,
@@ -167,7 +167,7 @@ class _CircleListState extends State<CircleList>
                 stopRotate: rotateMode == RotateMode.stopRotate,
                 onRadialDragUpdate: (PolarCoord updateCoord) {
                   if (widget.onDragUpdate != null) {
-                    widget.onDragUpdate(updateCoord);
+                    widget.onDragUpdate!(updateCoord);
                   }
                   setState(() {
                     dragModel.getAngleDiff(updateCoord, dragAngleRange);
@@ -175,7 +175,7 @@ class _CircleListState extends State<CircleList>
                 },
                 onRadialDragStart: (PolarCoord startCoord) {
                   if (widget.onDragStart != null) {
-                    widget.onDragStart(startCoord);
+                    widget.onDragStart!(startCoord);
                   }
                   setState(() {
                     dragModel.start = startCoord;
@@ -183,10 +183,10 @@ class _CircleListState extends State<CircleList>
                 },
                 onRadialDragEnd: () {
                   if (widget.onDragEnd != null) {
-                    widget.onDragEnd();
+                    widget.onDragEnd!();
                   }
                   dragModel.end = dragModel.start;
-                  dragModel.end.angle = dragModel.angleDiff;
+                  dragModel.end!.angle = dragModel.angleDiff;
                 },
                 child: Transform.rotate(
                   angle: isAnimationStop
@@ -256,25 +256,23 @@ class _CircleListState extends State<CircleList>
 }
 
 class _DragModel {
-  PolarCoord start;
-  PolarCoord end;
+  PolarCoord? start;
+  PolarCoord? end;
   double angleDiff = 0.0;
 
-  double getAngleDiff(PolarCoord updatePolar, DragAngleRange dragAngleRange) {
+  double getAngleDiff(PolarCoord updatePolar, DragAngleRange? dragAngleRange) {
     if (start != null) {
-      angleDiff = updatePolar.angle - start.angle;
+      angleDiff = updatePolar.angle - start!.angle;
       if (end != null) {
-        angleDiff += end.angle;
+        angleDiff += end!.angle;
       }
     }
     angleDiff = limitAngle(angleDiff, dragAngleRange);
     return angleDiff;
   }
 
-  double limitAngle(double angleDiff, DragAngleRange dragAngleRange) {
-    if (dragAngleRange == null ||
-        dragAngleRange.start == null ||
-        dragAngleRange.end == null) return angleDiff;
+  double limitAngle(double angleDiff, DragAngleRange? dragAngleRange) {
+    if (dragAngleRange == null) return angleDiff;
     if (angleDiff > dragAngleRange.end) angleDiff = dragAngleRange.end;
     if (angleDiff < dragAngleRange.start) angleDiff = dragAngleRange.start;
     return angleDiff;
@@ -282,8 +280,8 @@ class _DragModel {
 }
 
 class AnimationSetting {
-  final Duration duration;
-  final Curve curve;
+  final Duration? duration;
+  final Curve? curve;
 
   AnimationSetting({this.duration, this.curve});
 }

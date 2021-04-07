@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 /// Use [onRadialDragStart], [onRadialDragUpdate], and [onRadialDragEnd] to
 /// react to the respective radial drag events.
 class RadialDragGestureDetector extends StatefulWidget {
-  final RadialDragStart onRadialDragStart;
-  final RadialDragUpdate onRadialDragUpdate;
-  final RadialDragEnd onRadialDragEnd;
-  final Widget child;
+  final RadialDragStart? onRadialDragStart;
+  final RadialDragUpdate? onRadialDragUpdate;
+  final RadialDragEnd? onRadialDragEnd;
+  final Widget? child;
   final bool stopRotate;
 
   RadialDragGestureDetector({
@@ -26,27 +26,27 @@ class RadialDragGestureDetector extends StatefulWidget {
 
   @override
   _RadialDragGestureDetectorState createState() =>
-      new _RadialDragGestureDetectorState();
+      _RadialDragGestureDetectorState();
 }
 
 class _RadialDragGestureDetectorState extends State<RadialDragGestureDetector> {
   _onPanStart(DragStartDetails details) {
     if (null != widget.onRadialDragStart) {
       final polarCoord = _polarCoordFromGlobalOffset(details.globalPosition);
-      widget.onRadialDragStart(polarCoord);
+      widget.onRadialDragStart!(polarCoord);
     }
   }
 
   _onPanUpdate(DragUpdateDetails details) {
     if (null != widget.onRadialDragUpdate) {
       final polarCoord = _polarCoordFromGlobalOffset(details.globalPosition);
-      widget.onRadialDragUpdate(polarCoord);
+      widget.onRadialDragUpdate!(polarCoord);
     }
   }
 
   _onPanEnd(DragEndDetails details) {
     if (null != widget.onRadialDragEnd) {
-      widget.onRadialDragEnd();
+      widget.onRadialDragEnd!();
     }
   }
 
@@ -57,19 +57,19 @@ class _RadialDragGestureDetectorState extends State<RadialDragGestureDetector> {
         (context.findRenderObject() as RenderBox).globalToLocal(globalOffset);
 
     // Convert the local offset to a Point so that we can do math with it.
-    final localTouchPoint = new Point(localTouchOffset.dx, localTouchOffset.dy);
+    final localTouchPoint = Point(localTouchOffset.dx, localTouchOffset.dy);
 
     // Create a Point at the center of this Widget to act as the origin.
     final originPoint =
-        new Point(context.size.width / 2, context.size.height / 2);
+        Point(context.size!.width / 2, context.size!.height / 2);
 
-    return new PolarCoord.fromPoints(originPoint, localTouchPoint);
+    return PolarCoord.fromPoints(originPoint, localTouchPoint);
   }
 
   @override
   Widget build(BuildContext context) {
     return widget.stopRotate
-        ? widget.child
+        ? widget.child!
         : GestureDetector(
             onPanStart: _onPanStart,
             onPanUpdate: _onPanUpdate,
@@ -89,15 +89,15 @@ class PolarCoord {
     // Subtract the origin from the point to get the vector from the origin
     // to the point.
     final vectorPoint = point - origin;
-    final vector = new Offset(vectorPoint.x, vectorPoint.y);
+    final vector = Offset(vectorPoint.x as double, vectorPoint.y as double);
 
     // The polar coordinate is the angle the vector forms with the x-axis, and
     // the distance of the vector.
-    return new PolarCoord(
+    return PolarCoord(
       vector.direction,
       vector.distance,
-      Offset(origin.x, origin.y),
-      Offset(point.x, point.y),
+      Offset(origin.x as double, origin.y as double),
+      Offset(point.x as double, point.y as double),
     );
   }
 

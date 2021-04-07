@@ -3,20 +3,22 @@ import 'package:circle_list_demo/full_screen_dialog_util.dart';
 import 'package:flutter/material.dart';
 
 class ShowDemoPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: SizedBox(),
-        title: Text("Circle List Demo", style: TextStyle(color: Colors.black),),
-        backgroundColor: Colors.white,
+        title: Text(
+          "Circle List Demo",
+          style: TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.grey[200],
       ),
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          FullScreenDialog.getInstance()
+          FullScreenDialog.getInstance()!
               .showDialog(context, BottomShowWidget());
         },
         backgroundColor: Colors.black,

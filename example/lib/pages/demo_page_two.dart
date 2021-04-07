@@ -9,7 +9,7 @@ class ShowDemoPageTwo extends StatefulWidget {
 }
 
 class _ShowDemoPageTwoState extends State<ShowDemoPageTwo> {
-  MyController myController;
+  MyController? myController;
 
   @override
   void initState() {
@@ -43,11 +43,10 @@ class _ShowDemoPageTwoState extends State<ShowDemoPageTwo> {
           }),
           onDragUpdate: (update) {
             Offset point = Offset(update.point.dx * 2, update.point.dy * 2);
-            myController.lookAt(point);
+            myController!.lookAt(point);
           },
         ),
       ),
     );
   }
-
 }
