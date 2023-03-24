@@ -197,10 +197,12 @@ class _CircleListState extends State<CircleList>
                   dragModel.end!.angle = dragModel.angleDiff;
                 },
                 child: Transform.rotate(
-                  angle: isAnimationStop
-                      ? (dragModel.angleDiff + widget.initialAngle)
-                      : (-_animationRotate.value * pi * 2 +
-                          widget.initialAngle),
+                  angle: widget.rotateMode == RotateMode.stopRotate
+                      ? widget.initialAngle
+                      : isAnimationStop
+                          ? (dragModel.angleDiff + widget.initialAngle)
+                          : (-_animationRotate.value * pi * 2 +
+                              widget.initialAngle),
                   child: Stack(
                       children: List.generate(widget.children.length, (index) {
                     final double childrenDiameter =
@@ -220,9 +222,13 @@ class _CircleListState extends State<CircleList>
                       left: outerRadius + childPoint.dx,
                       top: outerRadius + childPoint.dy,
                       child: Transform.rotate(
-                          angle: widget.isChildrenVertical
-                              ? (-(dragModel.angleDiff) - widget.initialAngle)
-                              : ((dragModel.angleDiff) + widget.initialAngle),
+                          angle: widget.rotateMode == RotateMode.stopRotate
+                              ? widget.initialAngle
+                              : widget.isChildrenVertical
+                                  ? (-(dragModel.angleDiff) -
+                                      widget.initialAngle)
+                                  : ((dragModel.angleDiff) +
+                                      widget.initialAngle),
                           child: Container(
                             width: childrenDiameter,
                             height: childrenDiameter,
