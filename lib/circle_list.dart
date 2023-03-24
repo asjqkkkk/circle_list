@@ -11,6 +11,9 @@ class CircleList extends StatefulWidget {
   final double? outerRadius;
   final double childrenPadding;
   final double initialAngle;
+  final double wedgeAngle;
+  final double offsetAngle;
+  final int activeChild;
   final Color? outerCircleColor;
   final Color? innerCircleColor;
   final Gradient? gradient;
@@ -32,6 +35,9 @@ class CircleList extends StatefulWidget {
     this.outerRadius,
     this.childrenPadding = 10,
     this.initialAngle = 0,
+    this.wedgeAngle = 0,
+    this.offsetAngle = 0,
+    this.activeChild = 0,
     this.outerCircleColor,
     this.innerCircleColor,
     this.origin,
@@ -151,15 +157,17 @@ class _CircleListState extends State<CircleList>
                         gradient: widget.gradient,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: widget.outerCircleColor ?? Colors.transparent,
+                          color: widget.outerCircleColor ??
+                              Color.fromARGB(0, 227, 22, 22),
                           width: outerRadius - innerRadius,
                         ))),
               ),
             ),
           ),
           Positioned(
-            left: origin.dx,
-            top: -origin.dy,
+            left: -75,
+            //  origin.dx,
+            top: origin.dy,
             child: Container(
               width: outerRadius * 2,
               height: outerRadius * 2,
@@ -194,38 +202,55 @@ class _CircleListState extends State<CircleList>
                       : (-_animationRotate.value * pi * 2 +
                           widget.initialAngle),
                   child: Stack(
-                    children: List.generate(widget.children.length, (index) {
-                      final double childrenDiameter =
-                          2 * pi * betweenRadius / widget.children.length -
-                              widget.childrenPadding;
-                      Offset childPoint = getChildPoint(
-                          index,
-                          widget.children.length,
-                          betweenRadius,
-                          childrenDiameter);
-                      return Positioned(
-                        left: outerRadius + childPoint.dx,
-                        top: outerRadius + childPoint.dy,
-                        child: Transform.rotate(
+                      children: List.generate(widget.children.length, (index) {
+                    final double childrenDiameter =
+                        2 * pi * betweenRadius / widget.children.length -
+                            widget.childrenPadding;
+                    Offset childPoint = getChildPoint(
+                        index,
+                        widget.children.length,
+                        betweenRadius,
+                        childrenDiameter);
+                    Offset arcPoint = getArcPoints(
+                        index,
+                        widget.children.length,
+                        betweenRadius,
+                        childrenDiameter);
+                    return Positioned(
+                      left: outerRadius + childPoint.dx,
+                      top: outerRadius + childPoint.dy,
+                      child: Transform.rotate(
                           angle: widget.isChildrenVertical
                               ? (-(dragModel.angleDiff) - widget.initialAngle)
                               : ((dragModel.angleDiff) + widget.initialAngle),
                           child: Container(
-                              width: childrenDiameter,
-                              height: childrenDiameter,
-                              alignment: Alignment.center,
-                              child: widget.children[index]),
-                        ),
-                      );
-                    }),
-                  ),
+                            width: childrenDiameter,
+                            height: childrenDiameter,
+                            alignment: Alignment.center,
+                            child: widget.activeChild == index
+                                ? Stack(
+                                    children: [
+                                      CustomPaint(
+                                        size: Size(100, 100),
+                                        painter: ArcPainter(
+                                            arcPoint.dx, (90 * (pi / 180))),
+                                      ),
+                                      widget.children[index],
+                                    ],
+                                  )
+                                : widget.children[index],
+                          )),
+                    );
+                  })),
                 ),
               ),
             ),
           ),
           Positioned(
-              left: origin.dx + outerRadius - innerRadius,
-              top: -origin.dy + outerRadius - innerRadius,
+              left: 25,
+              //  origin.dx + outerRadius - innerRadius,
+              top: 85,
+              // -origin.dy + outerRadius - innerRadius,
               child: Transform.rotate(
                 angle: widget.innerCircleRotateWithChildren
                     ? dragModel.angleDiff + widget.initialAngle
@@ -233,10 +258,11 @@ class _CircleListState extends State<CircleList>
                 child: Container(
                   width: innerRadius * 2,
                   height: innerRadius * 2,
-                  alignment: Alignment.center,
+                  alignment: Alignment.bottomLeft,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: widget.innerCircleColor ?? Colors.transparent,
+                    color: widget.innerCircleColor ??
+                        Color.fromARGB(0, 240, 35, 35),
                   ),
                   child: widget.centerWidget ?? SizedBox(),
                 ),
@@ -248,10 +274,28 @@ class _CircleListState extends State<CircleList>
 
   Offset getChildPoint(
       int index, int length, double betweenRadius, double childrenDiameter) {
-    double angel = 2 * pi * (index / length);
-    double x = cos(angel) * betweenRadius - childrenDiameter / 2;
-    double y = sin(angel) * betweenRadius - childrenDiameter / 2;
+    double angle = 2 * pi * (index / length);
+    double wedgeAngle = widget.wedgeAngle * (pi / 180) * index;
+    if (angle > wedgeAngle && wedgeAngle > 0) {
+      angle = wedgeAngle;
+    }
+    angle = angle + (widget.offsetAngle * (pi / 180));
+    double x = cos(angle) * betweenRadius - childrenDiameter / 2;
+    double y = sin(angle) * betweenRadius - childrenDiameter / 2;
     return Offset(x, y);
+  }
+
+  Offset getArcPoints(
+      int index, int length, double betweenRadius, double childrenDiameter) {
+    double angle = 2 * pi * (index / length);
+    double wedgeAngle = widget.wedgeAngle * (pi / 180) * index;
+    if (angle > wedgeAngle && wedgeAngle > 0) {
+      angle = wedgeAngle;
+    }
+    angle = angle + dragModel.angleDiff + (widget.offsetAngle * (pi / 180));
+    double startAngle = angle + (-45 * (pi / 180));
+    double endAngle = angle + (45 * (pi / 180));
+    return Offset(startAngle, endAngle);
   }
 }
 
@@ -284,4 +328,24 @@ class AnimationSetting {
   final Curve? curve;
 
   AnimationSetting({this.duration, this.curve});
+}
+
+class ArcPainter extends CustomPainter {
+  double startAngle;
+  double sweepAngle;
+  ArcPainter(this.startAngle, this.sweepAngle);
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromARGB(179, 29, 16, 71)
+      ..strokeWidth = 5
+      ..style = PaintingStyle.stroke;
+
+    final rect = Rect.fromLTWH(-3, 0, size.width, size.height);
+
+    canvas.drawArc(rect, startAngle, sweepAngle, false, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
