@@ -253,9 +253,9 @@ class _CircleListState extends State<CircleList>
             ),
           ),
           Positioned(
-              left: MediaQuery.of(context).size.width * 0.02,
+              left: 15,
               //  origin.dx + outerRadius - innerRadius,
-              top: MediaQuery.of(context).size.height / 12,
+              top: 75,
               // -origin.dy + outerRadius - innerRadius,
               child: Transform.rotate(
                 angle: widget.innerCircleRotateWithChildren
